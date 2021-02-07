@@ -5,7 +5,7 @@ echo 'production in the local "build" directory (i.e. within the appropriate'
 echo 'subdirectory of "/var/jenkins_home/workspace/"), correctly bundles React'
 echo 'in production mode and optimizes the build for the best performance.'
 set -x
-npm run build
+yarn run build
 set +x
 
 echo 'The following "npm" command downloads and installs the npm serve module'
@@ -15,7 +15,7 @@ echo '"/var/jenkins_home/workspace/"), which means that this module should not'
 echo 'need to be downloaded after this Pipeline''s initial run for a given'
 echo 'branch.'
 set -x
-npm install serve
+yarn install serve
 set +x
 
 echo 'The following "serve" command runs the npm serve module (downloaded'

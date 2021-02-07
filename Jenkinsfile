@@ -1,9 +1,47 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'node:10-alpine'
+            args '-p 3000:3000 -p 5000:5000'
+        }
+    }
+    environment {
+        CI = 'true'
+    }
     stages {
         stage('Build') {
             steps {
-                sh 'echo "Hello world!"'
+                sh 'yarn install'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'chmod +x '
+                sh './jenkins/scripts/test.sh'
+            }
+        }
+        stage('Deliver for development') {
+            when {
+                branch 'development' 
+            }
+            steps {
+                sh 'chmod +x ./jenkins/scripts/deliver-for-development.sh'
+                sh './jenkins/scripts/deliver-for-development.sh'
+                input message: 'Finished using the web site? (Click "Proceed" to continue)'
+                sh 'chmod +x ./jenkins/scripts/kill.sh'
+                sh './jenkins/scripts/kill.sh'
+            }
+        }
+        stage('Deploy for production') {
+            when {
+                branch 'production'  
+            }
+            steps {
+                sh 'chmod +x ./jenkins/scripts/deploy-for-production.sh'
+                sh './jenkins/scripts/deploy-for-production.sh'
+                input message: 'Finished using the web site? (Click "Proceed" to continue)'
+                sh 'chmod +x ./jenkins/scripts/kill.sh'
+                sh './jenkins/scripts/kill.sh'
             }
         }
     }
