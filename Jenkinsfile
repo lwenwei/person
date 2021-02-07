@@ -11,7 +11,6 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'yarn config set registry https://registry.npm.taobo.org'
                 sh 'yarn install'
             }
         }
