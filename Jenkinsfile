@@ -10,14 +10,18 @@ pipeline {
     stage('Build') {
       steps {
         sh 'yarn install'
-        echo 'hello'
-        sh 'echo $PATH'
-        echo 'good'
       }
     }
 
-  }
-  environment {
-    CI = 'true'
+    stage('Test') {
+      environment {
+        CI = 'true'
+      }
+      steps {
+        sh 'chmod +x ./jenkins/scripts/test.sh'
+        sh './jenkins/scripts/test.sh'
+      }
+    }
+
   }
 }
