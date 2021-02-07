@@ -10,6 +10,8 @@ pipeline {
     stage('Build') {
       steps {
         sh 'yarn install'
+        echo 'hello'
+        sh 'echo $PATH'
       }
     }
 
