@@ -12,6 +12,7 @@ pipeline {
         sh 'yarn install'
         echo 'hello'
         sh 'echo $PATH'
+        echo 'good'
       }
     }
 
